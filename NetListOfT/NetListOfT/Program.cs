@@ -19,8 +19,19 @@ namespace NetListOfT
                 Console.WriteLine(num);
 
             Console.WriteLine(evenNumbers.Count);
+            
+            //Exception
+            //Console.Write(evenNumbers[4]);
 
-            Console.Write(evenNumbers[2]);
+           // evenNumbers.Clear();
+           //Console.WriteLine(evenNumbers.Count);
+
+            Console.WriteLine(evenNumbers.Contains(7));
+
+            evenNumbers.RemoveAt(1);
+
+            foreach (var num in evenNumbers)
+                Console.WriteLine(num);
         }
     }
 }

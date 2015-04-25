@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data;
 using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,15 +30,19 @@ namespace NetListOfT
                 return index;
             }
         }
+       
 
         public T this[int index] 
-        {
+        {   
+            
             get
             {
+                if (index < 0 || index > Count) throw new ArgumentOutOfRangeException();
                 return list[index];
             }
             set
             {
+                if (index < 0 || index > Count) throw new ArgumentOutOfRangeException();
                 list[index] = value;
             } 
         }
@@ -45,6 +51,29 @@ namespace NetListOfT
         {
             list[index] = item;
             index++;
+        }
+
+        public void Clear()
+        {
+            list = default(T[]);
+            index = 0;
+        }
+
+        public bool Contains(T item)
+        {
+            foreach(var t in list)
+                if (t.Equals(item)) return true;
+            return false;
+        }
+
+        public void RemoveAt(int index)
+        {
+            if(index<0 || index>Count) throw new ArgumentOutOfRangeException();
+            for (int i = index; i < Count; i++)
+                list[i] = list[i + 1];
+
+            list[Count - 1] = default(T);
+            this.index--;
         }
 
        
@@ -59,7 +88,7 @@ namespace NetListOfT
                     yield return item;
                     counter++;
                 }
-        }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
