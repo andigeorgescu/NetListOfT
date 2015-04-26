@@ -76,18 +76,26 @@ namespace NetListOfT
             this.index--;
         }
 
-       
+        public MyList<T> FindAll(Func<T, bool> match)
+        {
+            MyList<T> newList = new MyList<T>();
+
+            foreach (var item in list)
+            {
+                if(match(item)==true) newList.Add(item);
+            }
+
+            return newList;
+        }
+
 
         public IEnumerator<T> GetEnumerator()
         {
-            int counter=0;
             foreach (var item in list)
             {
-                if (counter < index)
-                {
-                    yield return item;
-                    counter++;
-                }
+                if (item.Equals(default(T))) break;
+
+                yield return item;
             }
         }
 
