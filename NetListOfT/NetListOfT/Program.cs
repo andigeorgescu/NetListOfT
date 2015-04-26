@@ -42,9 +42,8 @@ namespace NetListOfT
             Console.WriteLine("Match");
 
             foreach (var num in result)
-            {
-                Console.WriteLine(num);
-            }
+               Console.WriteLine(num);
+            
         }
     }
 }
