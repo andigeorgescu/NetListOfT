@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace NetListOfT
 {
@@ -16,12 +17,13 @@ namespace NetListOfT
     {
         private T[] list =null;
         private int index=0;
+       
 
         public MyList()
         {
             list = new T[50];
         }
-       
+        
 
         public int Count
         {
@@ -32,18 +34,20 @@ namespace NetListOfT
         }
        
 
-        public T this[int index] 
+        public T this[int position] 
         {   
             
             get
             {
-                if (index < 0 || index > Count) throw new ArgumentOutOfRangeException();
-                return list[index];
+                if (position < 0 || position >= index) throw new ArgumentOutOfRangeException();
+                
+                return list[position];
             }
             set
             {
-                if (index < 0 || index > Count) throw new ArgumentOutOfRangeException();
-                list[index] = value;
+                if (position < 0 || position >= index) throw new ArgumentOutOfRangeException();
+                
+                list[position] = value;
             } 
         }
             
@@ -55,24 +59,25 @@ namespace NetListOfT
 
         public void Clear()
         {
-            list = default(T[]);
+
+            list=new T[50];
             index = 0;
+
         }
 
         public bool Contains(T item)
         {
             foreach(var t in list)
                 if (t.Equals(item)) return true;
+
             return false;
         }
 
-        public void RemoveAt(int index)
+        public void RemoveAt(int position)
         {
-            if(index<0 || index>Count) throw new ArgumentOutOfRangeException();
-            for (int i = index; i < Count; i++)
+            if(position<0 || position> index) throw new ArgumentOutOfRangeException();
+            for (int i = position; i < index; i++)
                 list[i] = list[i + 1];
-
-            list[Count - 1] = default(T);
             this.index--;
         }
 
@@ -82,7 +87,10 @@ namespace NetListOfT
 
             foreach (var item in list)
             {
-                if(match(item)==true) newList.Add(item);
+                if (match(item))
+                {
+                    newList.Add(item);
+                }
             }
 
             return newList;
@@ -91,12 +99,18 @@ namespace NetListOfT
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (var item in list)
+            int counter = 0;
+            for (int it = 0 ;it<index;it++)
             {
-                if (item.Equals(default(T))) break;
-
-                yield return item;
+                if (counter < index)
+                {
+                    yield return list[it];
+                    counter++;
+                }
+                else break;
+                
             }
+            
         }
 
         IEnumerator IEnumerable.GetEnumerator()
