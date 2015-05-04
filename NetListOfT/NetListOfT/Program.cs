@@ -28,8 +28,6 @@ namespace NetListOfT
             
             //Exception
             Console.WriteLine(evenNumbers[1]);
-
-            
             
             Console.WriteLine(evenNumbers.Contains(7));
 

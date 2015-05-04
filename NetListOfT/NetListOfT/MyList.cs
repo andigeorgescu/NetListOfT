@@ -15,13 +15,14 @@ namespace NetListOfT
 {
     class MyList<T> :IEnumerable<T>
     {
-        private T[] list =null;
-        private int index=0;
+        private T[] list;
+        private int index;
        
 
         public MyList()
         {
-            list = new T[50];
+            index = 0;
+            list = new T[index];
         }
         
 
@@ -53,6 +54,17 @@ namespace NetListOfT
             
         public void Add(T item)
         {
+            T[] cpylist = new T[index];
+            cpylist = list;
+            
+            
+            list=new T[index+1];
+
+            for (int it = 0; it < index; it++)
+            {
+                list[it] = cpylist[it];
+            }
+
             list[index] = item;
             index++;
         }
@@ -60,8 +72,8 @@ namespace NetListOfT
         public void Clear()
         {
 
-            list=new T[50];
             index = 0;
+            list = new T[index];
 
         }
 
@@ -76,9 +88,25 @@ namespace NetListOfT
         public void RemoveAt(int position)
         {
             if(position<0 || position> index) throw new ArgumentOutOfRangeException();
-            for (int i = position; i < index; i++)
-                list[i] = list[i + 1];
-            this.index--;
+            
+            T[] cpylist = new T[index];
+            cpylist = list;
+            list = new T[index - 1];
+
+            for (int it = 0; it < index-1; it++)
+            {
+                
+                list[it] = cpylist[it];
+
+            }
+            for (int it = position; it < index-1; it++)
+            {
+
+                list[it] = cpylist[it + 1];
+
+            }
+            index--;
+
         }
 
         public MyList<T> FindAll(Func<T, bool> match)
