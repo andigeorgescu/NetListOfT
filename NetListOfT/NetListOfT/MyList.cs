@@ -54,10 +54,9 @@ namespace NetListOfT
             
         public void Add(T item)
         {
-            T[] cpylist = new T[index];
-            cpylist = list;
-            
-            
+
+            var cpylist = list;
+
             list=new T[index+1];
 
             for (int it = 0; it < index; it++)
@@ -89,11 +88,11 @@ namespace NetListOfT
         {
             if(position<0 || position> index) throw new ArgumentOutOfRangeException();
             
-            T[] cpylist = new T[index];
-            cpylist = list;
+            var cpylist = list;
+
             list = new T[index - 1];
 
-            for (int it = 0; it < index-1; it++)
+            for (int it = 0; it < position; it++)
             {
                 
                 list[it] = cpylist[it];
